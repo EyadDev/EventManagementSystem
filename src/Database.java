@@ -16,7 +16,7 @@ public class Database {
         return wallets.get(index);
     }
 
-    public static int getWalletSize(){
+    public static int getWalletsSize(){
         return wallets.size();
     }
 

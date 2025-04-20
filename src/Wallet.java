@@ -2,6 +2,8 @@ public class Wallet {
     private double balance;
     private Person owner;
 
+    public static final double DEFAULT_BALANCE = 0;
+
     Wallet(double balance, Person owner){
         this.balance = balance;
         this.owner = owner;
@@ -10,7 +12,7 @@ public class Wallet {
     }
 
     Wallet(Person owner){
-        this(0, owner);
+        this(DEFAULT_BALANCE, owner);
     }
 
     public double getBalance() {

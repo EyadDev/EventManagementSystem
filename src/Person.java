@@ -1,5 +1,4 @@
 public class Person {
-    public static final double DEFAULT_BALANCE = 0;
 
     private String username;
     private String password;
@@ -19,7 +18,7 @@ public class Person {
 
         this.password = password;
 
-        wallet = new Wallet(DEFAULT_BALANCE, this);
+        wallet = new Wallet(this);
         Database.addPerson(this);
     }
 
