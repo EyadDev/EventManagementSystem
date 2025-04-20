@@ -1,4 +1,4 @@
-public class Person {
+public abstract class Person {
 
     private String username;
     private String password;
@@ -9,20 +9,14 @@ public class Person {
     }
 
     Person(String username, String password){
-        if (isValidUser(username)){
-            this.username = username;
-        }
-        else{
-            return;
-        }
-
+        this.username = username;
         this.password = password;
 
         wallet = new Wallet(this);
         Database.addPerson(this);
     }
 
-    private boolean isValidUser(String username){
+    public static boolean isValidUser(String username){
         for (int i = 0; i < Database.getPeopleSize(); i++){
             if (Database.getPerson(i).getUsername().equals(username)){
                 System.out.println("Account already exists with the same username");
