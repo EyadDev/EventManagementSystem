@@ -6,14 +6,15 @@ public class Category {
 
     Category(String name){
         this.name = name;
+        Database.addCategory(this);
     }
 
     public void addEvent(Event event){
         events.add(event);
     }
 
-    public void removeEvent(int index){
-        events.remove(index);
+    public void removeEvent(Event event){
+        events.remove(event);
     }
 
     public void getEvent(int index){

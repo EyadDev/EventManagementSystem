@@ -12,8 +12,8 @@ public class Organizer extends Person{
         organizedEvents.add(event);
     }
 
-    public void removeEvent(int index){
-        organizedEvents.remove(index);
+    public void removeEvent(Event event){
+        organizedEvents.remove(event);
     }
 
     public void getEvent(int index){
