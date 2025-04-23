@@ -3,11 +3,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import java.util.Date;
 
 public class Screens {
     public static Scene LoginRegisterScreen(boolean login) {
@@ -29,12 +31,40 @@ public class Screens {
         var loginRegisterHBox = new HBox();
         loginRegisterHBox.setSpacing(10); // Horizontal gap between columns
         Button button1 = new Button(login ? "Login" : "Register");
-        Button loginPageButton = new Button("Go to " + (login ? "register" : "login") + " page");
+        Button button2 = new Button("Go to " + (login ? "register" : "login") + " page");
         loginRegisterHBox.getChildren().add(button1);
-        loginRegisterHBox.getChildren().add(loginPageButton);
+        loginRegisterHBox.getChildren().add(button2);
 
-        loginPageButton.setOnAction((ActionEvent e) -> {
+        button2.setOnAction((ActionEvent e) -> {
             Main.primaryStage.setScene(Screens.LoginRegisterScreen(!login));
+        });
+
+        button1.setOnAction((ActionEvent e) -> {
+            if (login) {
+                var userIndex = Database.getIndexOfUser(usernameField.getText());
+                if (userIndex == -1) {
+                    showAlert("Username doesn't exist", Alert.AlertType.ERROR);
+                    return;
+                }
+
+                if (Database.getPerson(userIndex).checkPassword(passwordField.getText())) {
+                    showAlert("Logged in", Alert.AlertType.INFORMATION);
+                }
+
+                else {
+                    showAlert("Incorrect password", Alert.AlertType.ERROR);
+                }
+            }
+
+            else{
+                if (Database.getIndexOfUser(usernameField.getText()) != -1) {
+                    showAlert("User already exists", Alert.AlertType.ERROR);
+                    return;
+                }
+
+                new Attendee(usernameField.getText(), passwordField.getText(), new Date(), addressField.getText(), Gender.Male);
+                showAlert("Created new attendee with username: " + usernameField.getText(), Alert.AlertType.CONFIRMATION);
+            }
         });
 
         // Add labels and fields to the GridPane
@@ -58,7 +88,7 @@ public class Screens {
             usernameField.setStyle("-fx-font-size: " + fontSize + "px;");
             passwordField.setStyle("-fx-font-size: " + fontSize + "px;");
             button1.setStyle("-fx-font-size: " + fontSize + "px;");
-            loginPageButton.setStyle("-fx-font-size: " + fontSize + "px;");
+            button2.setStyle("-fx-font-size: " + fontSize + "px;");
             addressLabel.setFont(new Font(fontSize));
             addressField.setStyle("-fx-font-size: " + fontSize + "px;");
         });
@@ -78,5 +108,13 @@ public class Screens {
         hBox.setAlignment(Pos.CENTER);
 
         return hBox;
+    }
+
+    private static void showAlert(String error, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(error);
+        alert.showAndWait();
     }
 }
