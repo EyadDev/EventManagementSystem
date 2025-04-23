@@ -6,14 +6,12 @@ public class Attendee extends User implements Comparable<Attendee> {
     private String address;
     private Gender gender;
     private ArrayList<String> interests;
-    private Wallet wallet;
 
     public Attendee(String username, String password, Date birthDate, String address, Gender gender) {
         super(username, password);
         this.birthDate = birthDate;
         this.address = address;
         this.gender = gender;
-        wallet = new Wallet(this);
     }
 
     public Date getDateOfBirth() {
@@ -62,9 +60,5 @@ public class Attendee extends User implements Comparable<Attendee> {
     @Override
     public int compareTo(Attendee o) {
         return this.getUsername().compareTo(o.getUsername());
-    }
-
-    public Wallet getWallet() {
-        return wallet;
     }
 }

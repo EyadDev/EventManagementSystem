@@ -20,6 +20,16 @@ public class Database {
 
     public static User getPerson(int index) { return people.get(index); }
 
+    public static int getIndexOfUser(String username) {
+        for (var i = 0; i < people.size(); i++) {
+            if (people.get(i).getUsername().equals(username)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     public static int getPeopleSize(){
         return people.size();
     }

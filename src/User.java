@@ -2,10 +2,12 @@ public abstract class User {
 
     private String username;
     private String passwordHash;
+    private Wallet wallet;
 
     User(String username, String password){
         this.username = username;
         this.passwordHash = HashHelper.hashPassword(password);
+        wallet = new Wallet(this);
 
         Database.addUser(this);
     }
@@ -32,5 +34,9 @@ public abstract class User {
 
     public boolean checkPassword(String password){
         return HashHelper.checkPassword(password, passwordHash);
+    }
+
+    public Wallet getWallet() {
+        return wallet;
     }
 }
