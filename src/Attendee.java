@@ -1,19 +1,19 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Date;
 
-public class Attendee extends Person implements Comparable<Attendee>{
+public class Attendee extends User implements Comparable<Attendee> {
     private Date birthDate;
     private String address;
     private Gender gender;
     private ArrayList<String> interests;
-
+    private Wallet wallet;
 
     public Attendee(String username, String password, Date birthDate, String address, Gender gender) {
         super(username, password);
         this.birthDate = birthDate;
         this.address = address;
         this.gender = gender;
+        wallet = new Wallet(this);
     }
 
     public Date getDateOfBirth() {
@@ -39,7 +39,6 @@ public class Attendee extends Person implements Comparable<Attendee>{
 
     //  display attendee info
     public String toString() {
-
         String stringToPrint = "Username: " + super.getUsername() + "\n" +
                 "Date of Birth: " + getDateOfBirth() + "\n" +
                 "Address: " + address + "\n" +
@@ -59,8 +58,13 @@ public class Attendee extends Person implements Comparable<Attendee>{
 
         return stringToPrint;
     }
+
     @Override
     public int compareTo(Attendee o) {
         return this.getUsername().compareTo(o.getUsername());
+    }
+
+    public Wallet getWallet() {
+        return wallet;
     }
 }

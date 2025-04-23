@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="bcprov-jdk18on-1.80">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/bcprov-jdk18on-1.80.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib/javafx" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/lib/javafx" />
+    </NATIVE>
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/javafx" recursive="false" />
+  </library>
+</component>

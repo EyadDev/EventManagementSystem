@@ -1,17 +1,17 @@
 public class Wallet {
     private double balance;
-    private Person owner;
+    private Attendee owner;
 
     public static final double DEFAULT_BALANCE = 0;
 
-    Wallet(double balance, Person owner){
+    Wallet(double balance, Attendee owner){
         this.balance = balance;
         this.owner = owner;
 
         Database.addWallet(this);
     }
 
-    Wallet(Person owner){
+    Wallet(Attendee owner){
         this(DEFAULT_BALANCE, owner);
     }
 
@@ -19,7 +19,7 @@ public class Wallet {
         return balance;
     }
 
-    public Person getOwner() {
+    public User getOwner() {
         return owner;
     }
 

@@ -1,38 +1,24 @@
 import java.util.ArrayList;
 
 public class Database {
-    private static ArrayList<Wallet> wallets = new ArrayList<Wallet>();
-    private static ArrayList<Person> people = new ArrayList<Person>();
-    private static ArrayList<Event> events = new ArrayList<Event>();
-    private static ArrayList<Category> categories = new ArrayList<Category>();
+    private static ArrayList<Wallet> wallets = new ArrayList<>();
+    private static ArrayList<User> people = new ArrayList<>();
+    private static ArrayList<Event> events = new ArrayList<>();
+    private static ArrayList<Category> categories = new ArrayList<>();
 
-    public static void addWallet(Wallet wallet){
-        wallets.add(wallet);
-    }
+    public static void addWallet(Wallet wallet) { wallets.add(wallet); }
 
-    public static void removeWallet(Wallet wallet){
-        wallets.remove(wallet);
-    }
+    public static void removeWallet(Wallet wallet) { wallets.remove(wallet); }
 
-    public static Wallet getWallet(int index){
-        return wallets.get(index);
-    }
+    public static Wallet getWallet(int index) { return wallets.get(index); }
 
-    public static int getWalletsSize(){
-        return wallets.size();
-    }
+    public static int getWalletsSize() { return wallets.size(); }
 
-    public static void addPerson(Person person){
-        people.add(person);
-    }
+    public static void addUser(User user) { people.add(user); }
 
-    public static void removePerson(Person person){
-        people.remove(person);
-    }
+    public static void removePerson(User user) { people.remove(user); }
 
-    public static Person getPerson(int index){
-        return people.get(index);
-    }
+    public static User getPerson(int index) { return people.get(index); }
 
     public static int getPeopleSize(){
         return people.size();
