@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class Admin extends Person{
+public class Admin extends User {
     private Date birthDate;
     private String role;
     private String workHours;

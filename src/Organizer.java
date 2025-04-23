@@ -1,7 +1,6 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Organizer extends Person{
+public class Organizer extends User {
     private ArrayList<Event> organizedEvents;
 
     Organizer(String username, String password){

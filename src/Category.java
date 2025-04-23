@@ -6,7 +6,6 @@ public class Category {
 
     Category(String name){
         this.name = name;
-        Database.addCategory(this);
     }
 
     public void addEvent(Event event){
