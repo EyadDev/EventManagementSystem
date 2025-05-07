@@ -1,22 +1,23 @@
 package Core;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Attendee extends User implements Comparable<Attendee> {
-    private Date birthDate;
+    private LocalDate birthDate;
     private String address;
     private Gender gender;
     private ArrayList<String> interests;
 
-    public Attendee(String username, String password, Date birthDate, String address, Gender gender) {
+    public Attendee(String username, String password, LocalDate birthDate, String address, Gender gender) {
         super(username, password, UserType.Attendee);
         this.birthDate = birthDate;
         this.address = address;
         this.gender = gender;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return birthDate;
     }
 

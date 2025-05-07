@@ -21,6 +21,10 @@ public class AdminScreen {
         borderPane.setTop(Helper.CenterNode(adminLabel));
         borderPane.setCenter(addRoomButton);
 
+        addRoomButton.setOnAction(e -> {
+            System.out.println(0);
+        });
+
         // Bind font size to the width of the stage
         Main.primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
             UpdateSizes(newVal.doubleValue());

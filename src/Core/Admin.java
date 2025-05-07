@@ -1,20 +1,21 @@
 package Core;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Admin extends User {
-    private Date birthDate;
+    private LocalDate birthDate;
     private String role;
     private String workHours;
 
-    Admin(String username, String password, Date birthDate, String role, String workHours){
+    Admin(String username, String password, LocalDate birthDate, String role, String workHours){
         super(username, password, UserType.Admin);
         this.birthDate = birthDate;
         this.role = role;
         this.workHours = workHours;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 

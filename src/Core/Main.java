@@ -1,9 +1,11 @@
 package Core;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import Screens.AdminScreen;
 import Screens.LoginRegisterScreen;
+import Screens.RegisterType;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,9 +14,9 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         //These are dummy accounts to test login
-        new Admin("admin", "1", new Date(), "CEO", "7AM-7PM");
+        new Admin("admin", "1", LocalDate.of(1970, 1,1), "CEO", "7AM-7PM");
         new Organizer("org", "1");
-        new Attendee("att", "1", new Date(), "Berlin, Germany", Gender.Male);
+        new Attendee("att", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male);
 
         Application.launch(args);
     }
@@ -25,7 +27,7 @@ public class Main extends Application {
         stage.minWidthProperty().set(1024);
         stage.minHeightProperty().set(576);
         stage.setTitle("CSE241'25 - Object Oriented Programing Project");
-        stage.setScene(AdminScreen.AdminScreen());
+        stage.setScene(LoginRegisterScreen.LoginRegisterScreen(true, RegisterType.none));
         stage.show();
     }
 }
