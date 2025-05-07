@@ -1,3 +1,5 @@
+package Core;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ public class Attendee extends User implements Comparable<Attendee> {
     private ArrayList<String> interests;
 
     public Attendee(String username, String password, Date birthDate, String address, Gender gender) {
-        super(username, password);
+        super(username, password, UserType.Attendee);
         this.birthDate = birthDate;
         this.address = address;
         this.gender = gender;
@@ -40,7 +42,7 @@ public class Attendee extends User implements Comparable<Attendee> {
         String stringToPrint = "Username: " + super.getUsername() + "\n" +
                 "Date of Birth: " + getDateOfBirth() + "\n" +
                 "Address: " + address + "\n" +
-                "Gender: " + gender + "\n";
+                "Core.Room.Gender: " + gender + "\n";
 
 
         if (this.interests != null) {

@@ -1,3 +1,5 @@
+package Core;
+
 import java.util.Date;
 
 public class Admin extends User {
@@ -6,7 +8,7 @@ public class Admin extends User {
     private String workHours;
 
     Admin(String username, String password, Date birthDate, String role, String workHours){
-        super(username, password);
+        super(username, password, UserType.Admin);
         this.birthDate = birthDate;
         this.role = role;
         this.workHours = workHours;

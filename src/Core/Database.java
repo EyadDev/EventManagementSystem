@@ -1,8 +1,10 @@
+package Core;
+
 import java.util.ArrayList;
 
 public class Database {
     private static ArrayList<Wallet> wallets = new ArrayList<>();
-    private static ArrayList<User> people = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Event> events = new ArrayList<>();
     private static ArrayList<Category> categories = new ArrayList<>();
 
@@ -14,15 +16,15 @@ public class Database {
 
     public static int getWalletsSize() { return wallets.size(); }
 
-    public static void addUser(User user) { people.add(user); }
+    public static void addUser(User user) { users.add(user); }
 
-    public static void removePerson(User user) { people.remove(user); }
+    public static void removePerson(User user) { users.remove(user); }
 
-    public static User getPerson(int index) { return people.get(index); }
+    public static User getPerson(int index) { return users.get(index); }
 
     public static int getIndexOfUser(String username) {
-        for (var i = 0; i < people.size(); i++) {
-            if (people.get(i).getUsername().equals(username)) {
+        for (var i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
                 return i;
             }
         }
@@ -31,7 +33,7 @@ public class Database {
     }
 
     public static int getPeopleSize(){
-        return people.size();
+        return users.size();
     }
 
     public static void addEvent(Event event){

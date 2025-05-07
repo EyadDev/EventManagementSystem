@@ -1,3 +1,5 @@
+package Core;
+
 public class Wallet {
     private double balance;
     private User owner;
