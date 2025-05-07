@@ -1,3 +1,5 @@
+package Core;
+
 import org.bouncycastle.crypto.generators.SCrypt;
 import org.bouncycastle.util.encoders.Base64;
 

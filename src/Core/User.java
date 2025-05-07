@@ -1,14 +1,23 @@
+package Core;
+
+import Core.Database;
+import Core.HashHelper;
+import Core.UserType;
+import Core.Wallet;
+
 public abstract class User {
 
     private String username;
     private String passwordHash;
     private Wallet wallet;
+    private UserType userType;
 
-    User(String username, String password){
+    protected User(String username, String password, UserType userType) {
         this.username = username;
         this.passwordHash = HashHelper.hashPassword(password);
-        wallet = new Wallet(this);
+        this.userType = userType;
 
+        wallet = new Wallet(this);
         Database.addUser(this);
     }
 
@@ -35,6 +44,8 @@ public abstract class User {
     public boolean checkPassword(String password){
         return HashHelper.checkPassword(password, passwordHash);
     }
+
+    public UserType getUserType() { return userType; }
 
     public Wallet getWallet() {
         return wallet;

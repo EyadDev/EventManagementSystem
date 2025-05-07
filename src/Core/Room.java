@@ -1,5 +1,6 @@
+package Core;
+
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Room implements Comparable<Room>{
     private ArrayList<Event> events;
