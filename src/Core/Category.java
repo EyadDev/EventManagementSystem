@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Category {
     private String name;
-    private ArrayList<Event> events;
+    private ArrayList<Event> events = new ArrayList<>();
 
     Category(String name){
         this.name = name;

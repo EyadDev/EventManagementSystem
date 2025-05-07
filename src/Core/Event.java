@@ -1,19 +1,23 @@
 package Core;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 class Event implements Comparable<Event> {
     private String name;
-    private Date startTime;
-    private Date endTime;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private Category category;
     private ArrayList<Attendee> attendees;
     private Organizer organizer;
     private double price;
 
-    public Event(String name, Date startTime, Date endTime, Category category, Organizer organizer, double price) {
+    public Event(String name, LocalDate date, LocalTime startTime, LocalTime endTime, Category category, Organizer organizer, double price) {
         this.name = name;
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
 
@@ -31,11 +35,15 @@ class Event implements Comparable<Event> {
         return name;
     }
 
-    public Date getStartTime() {
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public Date getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
@@ -51,9 +59,13 @@ class Event implements Comparable<Event> {
         return price;
     }
 
-    public void updateTime(Date startTime, Date endTime) {
+    public void updateTime(LocalTime startTime, LocalTime endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public void updateDate(LocalDate date) {
+        this.date = date;
     }
 
     public void updateCategory(Category category) {
