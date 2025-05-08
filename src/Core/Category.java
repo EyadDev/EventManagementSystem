@@ -1,6 +1,7 @@
 package Core;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Category {
     private String name;
@@ -8,6 +9,7 @@ public class Category {
 
     Category(String name){
         this.name = name;
+        Database.addCategory(this);
     }
 
     public void addEvent(Event event){
@@ -20,6 +22,10 @@ public class Category {
 
     public void getEvent(int index){
         events.get(index);
+    }
+
+    public int getEventsSize(){
+        return events.size();
     }
 
     @Override

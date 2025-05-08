@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Attendee extends User implements Comparable<Attendee> {
+public class Attendee extends User {
     private LocalDate birthDate;
     private String address;
     private Gender gender;
@@ -58,10 +58,5 @@ public class Attendee extends User implements Comparable<Attendee> {
         }
 
         return stringToPrint;
-    }
-
-    @Override
-    public int compareTo(Attendee o) {
-        return this.getUsername().compareTo(o.getUsername());
     }
 }

@@ -7,6 +7,7 @@ public class Database {
     private static ArrayList<User> users = new ArrayList<>();
     private static ArrayList<Event> events = new ArrayList<>();
     private static ArrayList<Category> categories = new ArrayList<>();
+    private static ArrayList<Room> rooms = new ArrayList<>();
 
     public static void addWallet(Wallet wallet) { wallets.add(wallet); }
 
@@ -16,9 +17,15 @@ public class Database {
 
     public static int getWalletsSize() { return wallets.size(); }
 
-    public static void addUser(User user) { users.add(user); }
+    public static void addUser(User user) {
+        users.add(user);
+        sortLists();
+    }
 
-    public static void removePerson(User user) { users.remove(user); }
+    public static void removeUser(User user) {
+        users.remove(user);
+        sortLists();
+    }
 
     public static User getPerson(int index) { return users.get(index); }
 
@@ -66,5 +73,28 @@ public class Database {
 
     public static int getCategoriesSize(){
         return categories.size();
+    }
+
+    public static void addRoom(Room room){
+        rooms.add(room);
+        sortLists();
+    }
+
+    public static void removeRoom(Room room){
+        rooms.remove(room);
+        sortLists();
+    }
+
+    public static Room getRoom(int index){
+        return rooms.get(index);
+    }
+
+    public static int getRoomsSize(){
+        return rooms.size();
+    }
+
+    private static void sortLists(){
+        users.sort( (a,b) -> {return a.compareTo(b); });
+        rooms.sort( (a,b) -> {return b.compareTo(a); });
     }
 }

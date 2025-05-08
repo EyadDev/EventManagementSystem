@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-class Event implements Comparable<Event> {
+public class Event implements Comparable<Event> {
     private String name;
     private LocalDate date;
     private LocalTime startTime;

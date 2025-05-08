@@ -15,12 +15,22 @@ public class Room implements Comparable<Room>{
     public Room(LocalTime openingTime, LocalTime closingTime) {
         this.openingTime = openingTime;
         this.closingTime = closingTime;
+
+        Database.addRoom(this);
+    }
+
+    public LocalTime getOpeningTime() {
+        return openingTime;
+    }
+
+    public LocalTime getClosingTime() {
+        return closingTime;
     }
 
     @Override
     public int compareTo(Room o) {
         // Compare based on number of events
-        return Integer.compare(this.events.size(), o.events.size());
+        return Integer.compare(this.getEventsSize(), o.getEventsSize());
     }
 
     // Returns true if the event was added successfully
@@ -36,6 +46,10 @@ public class Room implements Comparable<Room>{
 
     public Event getEvent(int index){
         return events.get(index);
+    }
+
+    public int getEventsSize(){
+        return events.size();
     }
 
     public boolean checkForConflicts(Event eventToAdd) {

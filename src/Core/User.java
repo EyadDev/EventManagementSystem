@@ -5,7 +5,7 @@ import Core.HashHelper;
 import Core.UserType;
 import Core.Wallet;
 
-public abstract class User {
+public abstract class User implements Comparable<User> {
 
     private String username;
     private String passwordHash;
@@ -49,5 +49,10 @@ public abstract class User {
 
     public Wallet getWallet() {
         return wallet;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return getUsername().compareTo(o.getUsername());
     }
 }
