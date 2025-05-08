@@ -5,13 +5,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class AdminScreen {
@@ -36,6 +34,20 @@ public class AdminScreen {
 
     private static Label categoriesLabel = new Label("Categories");
     private static ArrayList<Button> categoriesButtons = new ArrayList<>();
+
+    private static Label newRoomLabel = new Label("Create new Room");
+    private static Label openingTimeLabel = new Label("Opening time");
+    private static Spinner<Integer> openingHourSpinner = new Spinner(0, 24, 12, 1);
+    private static Spinner<Integer> openingMinuteSpinner = new Spinner(0, 55, 0, 5);
+    private static Label closingTimeLabel = new Label("Closing time");
+    private static Spinner<Integer> closingHourSpinner = new Spinner(0, 24, 12, 1);
+    private static Spinner<Integer> closingMinuteSpinner = new Spinner(0, 55, 0, 5);
+    private static Button createRoomButton = new Button("Add");
+
+    private static Label newCategoryLabel = new Label("Create new Category");
+    private static Label categoryNameLabel = new Label("Name");
+    private static TextField categoryNameField = new TextField("Default");
+    private static Button createCategoryButton = new Button("Add");
 
     public static Scene AdminScreen() {
 
@@ -77,6 +89,42 @@ public class AdminScreen {
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
+        addRoomButton.setOnAction(e -> {
+            borderPane.setCenter(CreateNewRoomPanel());
+            UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
+        });
+
+        addCategoryButton.setOnAction(e -> {
+            borderPane.setCenter(CreateNewCategoryPanel());
+            UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
+        });
+
+        createRoomButton.setOnAction(e -> {
+            LocalTime openingTime = LocalTime.of(openingHourSpinner.getValue(), openingMinuteSpinner.getValue());
+            LocalTime closingTime = LocalTime.of(closingHourSpinner.getValue(), closingMinuteSpinner.getValue());
+
+            if (openingTime.isBefore(closingTime)){
+                new Room(openingTime, closingTime);
+                Helper.ShowAlert("Room succesfully created", Alert.AlertType.CONFIRMATION);
+            }
+            else{
+                Helper.ShowAlert("Closing time can not be the same or before opening time", Alert.AlertType.ERROR);
+            }
+
+        });
+
+        createCategoryButton.setOnAction(e -> {
+            String name = categoryNameField.getText();
+
+            if (!Category.isDuplicate(name)){
+                new Category(name);
+                Helper.ShowAlert("Category succesfully created", Alert.AlertType.CONFIRMATION);
+            }
+            else{
+                Helper.ShowAlert("This category already exists", Alert.AlertType.ERROR);
+            }
+        });
+
         // Bind font size to the width of the stage
         Main.primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> {
             UpdateSizes(newVal.doubleValue());
@@ -100,6 +148,20 @@ public class AdminScreen {
         roomsLabel.setFont(new Font(fontSize));
         eventsLabel.setFont(new Font(fontSize));
         categoriesLabel.setFont(new Font(fontSize));
+
+        newRoomLabel.setFont(new Font(fontSize));
+        openingTimeLabel.setFont(new Font(fontSize));
+        openingHourSpinner.setStyle("-fx-font-size: " + fontSize + "px;");
+        openingMinuteSpinner.setStyle("-fx-font-size: " + fontSize + "px;");
+        closingTimeLabel.setFont(new Font(fontSize));
+        closingHourSpinner.setStyle("-fx-font-size: " + fontSize + "px;");
+        closingMinuteSpinner.setStyle("-fx-font-size: " + fontSize + "px;");
+        createRoomButton.setStyle("-fx-font-size: " + fontSize + "px;");
+
+        newCategoryLabel.setFont(new Font(fontSize));
+        categoryNameLabel.setFont(new Font(fontSize));
+        categoryNameField.setStyle("-fx-font-size: " + fontSize + "px;");
+        createCategoryButton.setStyle("-fx-font-size: " + fontSize + "px;");
 
         for(int i = 0; i < attendeeButtons.size(); i++){
             attendeeButtons.get(i).setStyle("-fx-font-size: " + fontSize + "px;");
@@ -250,5 +312,37 @@ public class AdminScreen {
         categoriesBox.getChildren().add(categoriesList);
 
         return categoriesBox;
+    }
+
+    private static GridPane CreateNewRoomPanel(){
+        GridPane grid = new GridPane();
+
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(0, 0, 0, 40));
+        grid.add(newRoomLabel, 0, 0);
+        grid.add(openingTimeLabel, 0, 1);
+        grid.add(openingHourSpinner, 1, 1);
+        grid.add(openingMinuteSpinner, 2, 1);
+        grid.add(closingTimeLabel, 0, 2);
+        grid.add(closingHourSpinner, 1, 2);
+        grid.add(closingMinuteSpinner, 2, 2);
+        grid.add(createRoomButton, 0, 3);
+
+        return grid;
+    }
+
+    private static GridPane CreateNewCategoryPanel(){
+        GridPane grid = new GridPane();
+
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(0, 0, 0, 40));
+        grid.add(newCategoryLabel, 0, 0);
+        grid.add(categoryNameLabel, 0, 1);
+        grid.add(categoryNameField, 1, 1);
+        grid.add(createCategoryButton, 0, 2);
+
+        return grid;
     }
 }

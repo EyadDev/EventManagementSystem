@@ -7,9 +7,19 @@ public class Category {
     private String name;
     private ArrayList<Event> events = new ArrayList<>();
 
-    Category(String name){
+    public Category(String name){
         this.name = name;
         Database.addCategory(this);
+    }
+
+    public static boolean isDuplicate(String name){
+        for (int i = 0; i < Database.getCategoriesSize(); i++){
+            if (Database.getCategory(i).toString().equals(name)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void addEvent(Event event){
