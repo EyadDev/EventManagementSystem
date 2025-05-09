@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class OrgaizerScreen {
     private static final Label organizerLabel = new Label("Organizer interface");
 
+    private static final Label walletBalance = new Label("Balance: ");
     private static final Button showAttendeesButton = new Button("Attendees");
     private static final Button showEventsButton = new Button("Events");
     private static final Button showRoomsButton = new Button("Rooms");
@@ -53,6 +54,8 @@ public class OrgaizerScreen {
 
         VBox buttonStack = new VBox();
         buttonStack.setSpacing(10);
+        buttonStack.getChildren().add(walletBalance);
+        walletBalance.setText("Balance: " + organizer.getWallet().getBalance() + "$");
         buttonStack.getChildren().add(showAttendeesButton);
         buttonStack.getChildren().add(showEventsButton);
         buttonStack.getChildren().add(showRoomsButton);
@@ -71,6 +74,10 @@ public class OrgaizerScreen {
         borderPane.setTop(ScreensHelper.CenterNode(organizerLabel));
         borderPane.setLeft(buttonStack);
 
+        ScrollPane sp1 = new ScrollPane();
+        sp1.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp1.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
         roomToHostEventSelector.getItems().clear();
         roomToHostEventSelector.getItems().addAll(Database.instance.getRoomNames());
 
@@ -79,13 +86,16 @@ public class OrgaizerScreen {
 
 
         showAttendeesButton.setOnAction(e -> {
-            borderPane.setCenter(CreateAttendeesList());
+            borderPane.setCenter(sp1);
+            sp1.setContent(CreateAttendeesList());
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         showRoomsButton.setOnAction(e -> {
-            borderPane.setCenter(AdminScreen.CreateRoomsList(false, roomButtons, showRoomsButton));
+            borderPane.setCenter(sp1);
+            sp1.setContent(AdminScreen.CreateRoomsList(false, roomButtons, showRoomsButton));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
+            AdminScreen.UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         addEventButton.setOnAction(e -> {
@@ -94,13 +104,17 @@ public class OrgaizerScreen {
         });
 
         showEventsButton.setOnAction(e -> {
-            borderPane.setCenter(AdminScreen.CreateEventsList(eventButtons));
+            borderPane.setCenter(sp1);
+            sp1.setContent(AdminScreen.CreateEventsList(eventButtons));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
+            AdminScreen.UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         showCategoriesButton.setOnAction(e -> {
-            borderPane.setCenter(AdminScreen.CreateCategoriesList(false, categoryButtons, showCategoriesButton));
+            borderPane.setCenter(sp1);
+            sp1.setContent(AdminScreen.CreateCategoriesList(false, categoryButtons, showCategoriesButton));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
+            AdminScreen.UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         logoutButton.setOnAction(e -> {
@@ -178,6 +192,7 @@ public class OrgaizerScreen {
     private static void UpdateSizes(double newVal){
         double fontSize = Math.max(12, newVal / 50);
         organizerLabel.setFont(new Font(fontSize));
+        walletBalance.setStyle("-fx-font-size: " + fontSize + "px;");
         showAttendeesButton.setStyle("-fx-font-size: " + fontSize + "px;");
         showEventsButton.setStyle("-fx-font-size: " + fontSize + "px;");
         showRoomsButton.setStyle("-fx-font-size: " + fontSize + "px;");

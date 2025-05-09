@@ -67,23 +67,31 @@ public class AdminScreen {
         borderPane.setTop(ScreensHelper.CenterNode(adminLabel));
         borderPane.setLeft(buttonStack);
 
+        ScrollPane sp1 = new ScrollPane();
+        sp1.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp1.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
         showAttendeesButton.setOnAction(e -> {
-            borderPane.setCenter(CreateAttendeesList());
+            borderPane.setCenter(sp1);
+            sp1.setContent(CreateAttendeesList());
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         showRoomsButton.setOnAction(e -> {
-            borderPane.setCenter(CreateRoomsList(true, roomButtons, showRoomsButton));
+            borderPane.setCenter(sp1);
+            sp1.setContent(CreateRoomsList(true, roomButtons, showRoomsButton));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         showEventsButton.setOnAction(e -> {
-            borderPane.setCenter(CreateEventsList(eventButtons));
+            borderPane.setCenter(sp1);
+            sp1.setContent(CreateEventsList(eventButtons));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         showCategoriesButton.setOnAction(e -> {
-            borderPane.setCenter(CreateCategoriesList(true, categoryButtons, showCategoriesButton));
+            borderPane.setCenter(sp1);
+            sp1.setContent(CreateCategoriesList(true, categoryButtons, showCategoriesButton));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
@@ -137,7 +145,7 @@ public class AdminScreen {
         return new Scene((borderPane), Main.primaryStage.widthProperty().doubleValue(), Main.primaryStage.heightProperty().doubleValue());
     }
 
-    private static void UpdateSizes(double newVal){
+    public static void UpdateSizes(double newVal){
         double fontSize = Math.max(12, newVal / 50);
         adminLabel.setFont(new Font(fontSize));
         addRoomButton.setStyle("-fx-font-size: " + fontSize + "px;");

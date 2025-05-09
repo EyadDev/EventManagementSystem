@@ -40,12 +40,18 @@ public class AttendeeScreen {
         borderPane.setTop(ScreensHelper.CenterNode(attendeeLabel));
         borderPane.setLeft(buttonStack);
 
+        ScrollPane sp1 = new ScrollPane();
+        sp1.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp1.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
         showEventsButton.setOnAction(e -> {
-            borderPane.setCenter(CreateEventsList(attendee));
+            borderPane.setCenter(sp1);
+            sp1.setContent(CreateEventsList(attendee));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         showProfileButton.setOnAction(e -> {
+            borderPane.setCenter(sp1);
             borderPane.setCenter(createAttendeeProfile(attendee));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
@@ -120,6 +126,7 @@ public class AttendeeScreen {
                 buyButton.setOnAction(e -> {
                     if (attendee.getWallet().getBalance() >= event.getPrice()){
                         attendee.getWallet().updateBalance(-event.getPrice());
+                        event.getOrganizer().getWallet().updateBalance(event.getPrice());
                         walletBalance.setText("Balance: $" + attendee.getWallet().getBalance());
                         event.addAttendee(attendee);
                         showEventsButton.fire();
