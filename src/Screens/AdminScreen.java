@@ -22,6 +22,7 @@ public class AdminScreen {
     private static Button showEventsButton = new Button("Events");
     private static Button showRoomsButton = new Button("Rooms");
     private static Button showCategoriesButton = new Button("Categories");
+    private static Button logoutButton = new Button("Logout");
 
     private static Label attendeesLabel = new Label("Attendees");
     private static ArrayList<Button> attendeeButtons = new ArrayList<>();
@@ -59,15 +60,12 @@ public class AdminScreen {
         buttonStack.getChildren().add(showEventsButton);
         buttonStack.getChildren().add(showRoomsButton);
         buttonStack.getChildren().add(showCategoriesButton);
+        buttonStack.getChildren().add(logoutButton);
 
         // Create a GridPane
         var borderPane = new BorderPane();
         borderPane.setTop(Helper.CenterNode(adminLabel));
         borderPane.setLeft(buttonStack);
-
-        addRoomButton.setOnAction(e -> {
-            System.out.println(0);
-        });
 
         showAttendeesButton.setOnAction(e -> {
             borderPane.setCenter(CreateAttendeesList());
@@ -87,6 +85,10 @@ public class AdminScreen {
         showCategoriesButton.setOnAction(e -> {
             borderPane.setCenter(CreateCategoriesList());
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
+        });
+
+        logoutButton.setOnAction(e -> {
+            Main.primaryStage.setScene(LoginRegisterScreen.LoginRegisterScreen(true, RegisterType.none));
         });
 
         addRoomButton.setOnAction(e -> {
@@ -144,6 +146,7 @@ public class AdminScreen {
         showEventsButton.setStyle("-fx-font-size: " + fontSize + "px;");
         showRoomsButton.setStyle("-fx-font-size: " + fontSize + "px;");
         showCategoriesButton.setStyle("-fx-font-size: " + fontSize + "px;");
+        logoutButton.setStyle("-fx-font-size: " + fontSize + "px;");
         attendeesLabel.setFont(new Font(fontSize));
         roomsLabel.setFont(new Font(fontSize));
         eventsLabel.setFont(new Font(fontSize));
@@ -258,7 +261,7 @@ public class AdminScreen {
         for (int i = 0; i < Database.getEventsSize(); i++){
             Event event = Database.getEvent(i);
 
-            Button button = new Button(event.getName() + " | on " + event.getDate() + " | starts at " + event.getStartTime() + " | ends at " + event.getEndTime() + " | Category: " + event.getCategory());
+            Button button = new Button(event.getName() + " | on " + event.getDate() + " | starts at " + event.getStartTime() + " | ends at " + event.getEndTime() + " | Category: " + event.getCategory() + " | " + event.getNumberOfAttendees() + " attending");
             eventsList.getChildren().add(button);
 
             eventsButtons.add(button);

@@ -8,13 +8,14 @@ public class Attendee extends User {
     private LocalDate birthDate;
     private String address;
     private Gender gender;
-    private ArrayList<String> interests;
+    private String interests;
 
-    public Attendee(String username, String password, LocalDate birthDate, String address, Gender gender) {
+    public Attendee(String username, String password, LocalDate birthDate, String address, Gender gender, String interests) {
         super(username, password, UserType.Attendee);
         this.birthDate = birthDate;
         this.address = address;
         this.gender = gender;
+        this.interests = interests;
     }
 
     public LocalDate getDateOfBirth() {
@@ -29,13 +30,8 @@ public class Attendee extends User {
         return gender;
     }
 
-    public String getInterest(int index) {
-        return interests.get(index);
-    }
-
-    // input interests
-    public void addInterest(String interest) {
-        interests.add(interest);
+    public String getInterests() {
+        return interests;
     }
 
     //  display attendee info
@@ -43,19 +39,8 @@ public class Attendee extends User {
         String stringToPrint = "Username: " + super.getUsername() + "\n" +
                 "Date of Birth: " + getDateOfBirth() + "\n" +
                 "Address: " + address + "\n" +
-                "Core.Room.Gender: " + gender + "\n";
-
-
-        if (this.interests != null) {
-            StringBuilder interestList = new StringBuilder();
-            for (int i = 0; i < interests.size(); i++) {
-                interestList.append(interests.get(i));
-                if (i < interests.size() - 1) {
-                    interestList.append(", ");
-                }
-            }
-            stringToPrint += interestList;
-        }
+                "Core.Room.Gender: " + gender + "\n" +
+                "interests: " + interests;
 
         return stringToPrint;
     }

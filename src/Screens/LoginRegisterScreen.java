@@ -36,6 +36,9 @@ public class LoginRegisterScreen {
     private static RadioButton maleButton = new RadioButton("Male");
     private static RadioButton femaleButton = new RadioButton("Female");
 
+    private static Label interestsLabel  = new Label("Interests");
+    private static TextField interestsField = new TextField();
+
     private static Button button1 = new Button();
     private static Button button2 = new Button();
 
@@ -115,7 +118,7 @@ public class LoginRegisterScreen {
                     switch (Database.getPerson(userIndex).getUserType()){
                         case UserType.Admin -> Main.primaryStage.setScene(AdminScreen.AdminScreen());
                         case UserType.Organizer -> Helper.ShowAlert("You are already an organizer", Alert.AlertType.ERROR);
-                        case UserType.Attendee -> Helper.ShowAlert("You are already an attendee", Alert.AlertType.ERROR);
+                        case UserType.Attendee -> Main.primaryStage.setScene(AttendeeScreen.attendeeScreen((Attendee)Database.getPerson(userIndex)));
                     }
                 }
 
@@ -137,7 +140,7 @@ public class LoginRegisterScreen {
                         gender = Gender.Female;
                     }
 
-                    new Attendee(usernameField.getText(), passwordField.getText(), datePicker.getValue(), addressField.getText(), gender);
+                    new Attendee(usernameField.getText(), passwordField.getText(), datePicker.getValue(), addressField.getText(), gender, interestsField.getText());
                     Helper.ShowAlert("Created new attendee with username: " + usernameField.getText(), Alert.AlertType.CONFIRMATION);
                 }
                 else{
@@ -180,7 +183,9 @@ public class LoginRegisterScreen {
                 gridPane.add(addressField, 1, 6);
                 gridPane.add(genderLabel, 0, 7);
                 gridPane.add(genderHBox, 1 , 7);
-                gridPane.add(loginRegisterHBox, 1, 8);
+                gridPane.add(interestsLabel, 0, 8);
+                gridPane.add(interestsField, 1, 8);
+                gridPane.add(loginRegisterHBox, 1, 9);
             }
             else if(registerType == RegisterType.organiser){
                 gridPane.getChildren().clear();
@@ -227,6 +232,8 @@ public class LoginRegisterScreen {
         genderLabel.setFont(new Font(fontSize));
         maleButton.setStyle("-fx-font-size: " + fontSize + "px;");
         femaleButton.setStyle("-fx-font-size: " + fontSize + "px;");
+        interestsLabel.setFont(new Font(fontSize));
+        interestsField.setStyle("-fx-font-size: " + fontSize + "px;");
     }
 
     private static void SetAttendeeRegister(){

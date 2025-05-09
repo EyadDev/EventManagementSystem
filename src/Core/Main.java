@@ -19,14 +19,14 @@ public class Main extends Application {
         //These are dummy accounts to test login
         new Admin("admin", "1", LocalDate.of(1970, 1,1), "CEO", "7AM-7PM");
         Organizer og = new Organizer("org", "1");
-        new Attendee("a", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male);
-        new Attendee("b", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male);
-        new Attendee("c", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male);
-        new Attendee("d", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male);
-        new Attendee("e", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male);
-        new Attendee("f", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male);
-        new Attendee("g", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male);
-        new Attendee("h", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male);
+        new Attendee("a", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male, "Fun");
+        new Attendee("b", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male  , "Fun");
+        new Attendee("c", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male, "Fun");
+        new Attendee("d", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male, "Fun");
+        new Attendee("e", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male, "Fun");
+        new Attendee("f", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male, "Fun");
+        new Attendee("g", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male, "Fun");
+        new Attendee("h", "1", LocalDate.of(1970, 1,1), "Berlin, Germany", Gender.Male, "Fun");
 
         Room room = new Room(LocalTime.of(8, 0,0), LocalTime.of(20, 0 ,0));
         Room room1 = new Room(LocalTime.of(8, 0,0), LocalTime.of(19, 30 ,0));

@@ -45,10 +45,12 @@ public class Database {
 
     public static void addEvent(Event event){
         events.add(event);
+        sortLists();
     }
 
     public static void removeEvent(Event event){
         events.remove(event);
+        sortLists();
     }
 
     public static Event getEvent(int index){
@@ -96,5 +98,6 @@ public class Database {
     private static void sortLists(){
         users.sort( (a,b) -> {return a.compareTo(b); });
         rooms.sort( (a,b) -> {return b.compareTo(a); });
+        events.sort( (a,b) -> {return a.compareTo(b); });
     }
 }

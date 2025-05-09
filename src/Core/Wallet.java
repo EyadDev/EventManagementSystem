@@ -4,7 +4,7 @@ public class Wallet {
     private double balance;
     private User owner;
 
-    public static final double DEFAULT_BALANCE = 0;
+    public static final double DEFAULT_BALANCE = 200;
 
     Wallet(double balance, User owner){
         this.balance = balance;
