@@ -9,12 +9,12 @@ public class Category {
 
     public Category(String name){
         this.name = name;
-        Database.addCategory(this);
+        Database.instance.addCategory(this);
     }
 
     public static boolean isDuplicate(String name){
-        for (int i = 0; i < Database.getCategoriesSize(); i++){
-            if (Database.getCategory(i).toString().equals(name)){
+        for (int i = 0; i < Database.instance.getCategoriesSize(); i++){
+            if (Database.instance.getCategory(i).toString().equals(name)){
                 return true;
             }
         }
@@ -37,6 +37,8 @@ public class Category {
     public int getEventsSize(){
         return events.size();
     }
+
+    public String getName() { return name; }
 
     @Override
     public String toString() {

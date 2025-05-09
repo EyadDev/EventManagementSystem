@@ -3,7 +3,6 @@ package Screens;
 import Core.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -13,42 +12,43 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class AdminScreen {
-    private static Label adminLabel = new Label("Admin interface");
-    private static TextField roomNameField = new TextField();
+    private static final Label adminLabel = new Label("Admin interface");
+    private static final TextField roomNameField = new TextField();
 
-    private static Button addRoomButton = new Button("Add Room");
-    private static Button addCategoryButton = new Button("Add Category");
-    private static Button showAttendeesButton = new Button("Attendees");
-    private static Button showEventsButton = new Button("Events");
-    private static Button showRoomsButton = new Button("Rooms");
-    private static Button showCategoriesButton = new Button("Categories");
-    private static Button logoutButton = new Button("Logout");
+    private static final Button addRoomButton = new Button("Add Room");
+    private static final Button addCategoryButton = new Button("Add Category");
+    private static final Button showAttendeesButton = new Button("Attendees");
+    private static final Button showEventsButton = new Button("Events");
+    private static final Button showRoomsButton = new Button("Rooms");
+    private static final Button showCategoriesButton = new Button("Categories");
+    private static final Button logoutButton = new Button("Logout");
 
-    private static Label attendeesLabel = new Label("Attendees");
-    private static ArrayList<Button> attendeeButtons = new ArrayList<>();
+    private static final Label attendeesLabel = new Label("Attendees");
+    private static final ArrayList<Button> attendeeButtons = new ArrayList<>();
 
-    private static Label roomsLabel = new Label("Rooms");
-    private static ArrayList<Button> roomsButtons = new ArrayList<>();
+    private static final Label roomsLabel = new Label("Rooms");
+    private static final ArrayList<Button> roomButtons = new ArrayList<>();
 
-    private static Label eventsLabel = new Label("Events");
-    private static ArrayList<Button> eventsButtons = new ArrayList<>();
+    private static final Label eventsLabel = new Label("Events");
+    private static final ArrayList<Button> eventButtons = new ArrayList<>();
 
-    private static Label categoriesLabel = new Label("Categories");
-    private static ArrayList<Button> categoriesButtons = new ArrayList<>();
+    private static final Label categoriesLabel = new Label("Categories");
+    private static final ArrayList<Button> categoryButtons = new ArrayList<>();
 
-    private static Label newRoomLabel = new Label("Create new Room");
-    private static Label openingTimeLabel = new Label("Opening time");
-    private static Spinner<Integer> openingHourSpinner = new Spinner(0, 24, 12, 1);
-    private static Spinner<Integer> openingMinuteSpinner = new Spinner(0, 55, 0, 5);
-    private static Label closingTimeLabel = new Label("Closing time");
-    private static Spinner<Integer> closingHourSpinner = new Spinner(0, 24, 12, 1);
-    private static Spinner<Integer> closingMinuteSpinner = new Spinner(0, 55, 0, 5);
-    private static Button createRoomButton = new Button("Add");
+    private static final Label newRoomLabel = new Label("Create new Room");
+    private static final Label roomNameLabel = new Label("Room Name");
+    static final Label openingTimeLabel = new Label("Opening time");
+    static final Spinner<Integer> openingHourSpinner = new Spinner(0, 24, 12, 1);
+    static final Spinner<Integer> openingMinuteSpinner = new Spinner(0, 55, 0, 5);
+    static final Label closingTimeLabel = new Label("Closing time");
+    static final Spinner<Integer> closingHourSpinner = new Spinner(0, 24, 12, 1);
+    static final Spinner<Integer> closingMinuteSpinner = new Spinner(0, 55, 0, 5);
+    private static final Button createRoomButton = new Button("Add");
 
-    private static Label newCategoryLabel = new Label("Create new Category");
-    private static Label categoryNameLabel = new Label("Name");
-    private static TextField categoryNameField = new TextField("Default");
-    private static Button createCategoryButton = new Button("Add");
+    private static final Label newCategoryLabel = new Label("Create new Category");
+    private static final Label categoryNameLabel = new Label("Name");
+    private static final TextField categoryNameField = new TextField("Default");
+    private static final Button createCategoryButton = new Button("Add");
 
     public static Scene AdminScreen() {
 
@@ -64,7 +64,7 @@ public class AdminScreen {
 
         // Create a GridPane
         var borderPane = new BorderPane();
-        borderPane.setTop(Helper.CenterNode(adminLabel));
+        borderPane.setTop(ScreensHelper.CenterNode(adminLabel));
         borderPane.setLeft(buttonStack);
 
         showAttendeesButton.setOnAction(e -> {
@@ -73,17 +73,17 @@ public class AdminScreen {
         });
 
         showRoomsButton.setOnAction(e -> {
-            borderPane.setCenter(CreateRoomsList());
+            borderPane.setCenter(CreateRoomsList(true, roomButtons, showRoomsButton));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         showEventsButton.setOnAction(e -> {
-            borderPane.setCenter(CreateEventsList());
+            borderPane.setCenter(CreateEventsList(eventButtons));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
         showCategoriesButton.setOnAction(e -> {
-            borderPane.setCenter(CreateCategoriesList());
+            borderPane.setCenter(CreateCategoriesList(true, categoryButtons, showCategoriesButton));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
@@ -106,11 +106,11 @@ public class AdminScreen {
             LocalTime closingTime = LocalTime.of(closingHourSpinner.getValue(), closingMinuteSpinner.getValue());
 
             if (openingTime.isBefore(closingTime)){
-                new Room(openingTime, closingTime);
-                Helper.ShowAlert("Room succesfully created", Alert.AlertType.CONFIRMATION);
+                new Room(roomNameField.getText(), openingTime, closingTime);
+                ScreensHelper.ShowAlert("Room successfully created", Alert.AlertType.CONFIRMATION);
             }
             else{
-                Helper.ShowAlert("Closing time can not be the same or before opening time", Alert.AlertType.ERROR);
+                ScreensHelper.ShowAlert("Closing time can not be the same or before opening time", Alert.AlertType.ERROR);
             }
 
         });
@@ -120,10 +120,10 @@ public class AdminScreen {
 
             if (!Category.isDuplicate(name)){
                 new Category(name);
-                Helper.ShowAlert("Category succesfully created", Alert.AlertType.CONFIRMATION);
+                ScreensHelper.ShowAlert("Category successfully created", Alert.AlertType.CONFIRMATION);
             }
             else{
-                Helper.ShowAlert("This category already exists", Alert.AlertType.ERROR);
+                ScreensHelper.ShowAlert("This category already exists", Alert.AlertType.ERROR);
             }
         });
 
@@ -153,6 +153,7 @@ public class AdminScreen {
         categoriesLabel.setFont(new Font(fontSize));
 
         newRoomLabel.setFont(new Font(fontSize));
+        roomNameLabel.setFont(new Font(fontSize));
         openingTimeLabel.setFont(new Font(fontSize));
         openingHourSpinner.setStyle("-fx-font-size: " + fontSize + "px;");
         openingMinuteSpinner.setStyle("-fx-font-size: " + fontSize + "px;");
@@ -164,22 +165,23 @@ public class AdminScreen {
         newCategoryLabel.setFont(new Font(fontSize));
         categoryNameLabel.setFont(new Font(fontSize));
         categoryNameField.setStyle("-fx-font-size: " + fontSize + "px;");
+        roomNameField.setStyle("-fx-font-size: " + fontSize + "px;");
         createCategoryButton.setStyle("-fx-font-size: " + fontSize + "px;");
 
         for(int i = 0; i < attendeeButtons.size(); i++){
             attendeeButtons.get(i).setStyle("-fx-font-size: " + fontSize + "px;");
         }
 
-        for(int i = 0; i < roomsButtons.size(); i++){
-            roomsButtons.get(i).setStyle("-fx-font-size: " + fontSize + "px;");
+        for(int i = 0; i < roomButtons.size(); i++){
+            roomButtons.get(i).setStyle("-fx-font-size: " + fontSize + "px;");
         }
 
-        for(int i = 0; i < eventsButtons.size(); i++){
-            eventsButtons.get(i).setStyle("-fx-font-size: " + fontSize + "px;");
+        for(int i = 0; i < eventButtons.size(); i++){
+            eventButtons.get(i).setStyle("-fx-font-size: " + fontSize + "px;");
         }
 
-        for(int i = 0; i < categoriesButtons.size(); i++){
-            categoriesButtons.get(i).setStyle("-fx-font-size: " + fontSize + "px;");
+        for(int i = 0; i < categoryButtons.size(); i++){
+            categoryButtons.get(i).setStyle("-fx-font-size: " + fontSize + "px;");
         }
     }
 
@@ -190,8 +192,8 @@ public class AdminScreen {
         attendeesList.setHgap(10);
         attendeesList.setOrientation(Orientation.VERTICAL);
 
-        for (int i = 0; i < Database.getPeopleSize(); i++){
-            User user = Database.getPerson(i);
+        for (int i = 0; i < Database.instance.getPeopleSize(); i++){
+            User user = Database.instance.getPerson(i);
 
             if(user instanceof Attendee){
                 Button button = new Button("Username: " + user.getUsername() + " | Balance: " + user.getWallet().getBalance() + "$");
@@ -211,34 +213,37 @@ public class AdminScreen {
     }
 
     //create a list of attendees that includes their username and wallet balance
-    private static VBox CreateRoomsList(){
+    static VBox CreateRoomsList(boolean showRemoveButton, ArrayList<Button> roomButtons, Button buttonToFire){
         FlowPane roomsList = new FlowPane();
         roomsList.setVgap(10);
         roomsList.setHgap(10);
         roomsList.setOrientation(Orientation.VERTICAL);
 
-        for (int i = 0; i < Database.getRoomsSize(); i++){
-            Room room = Database.getRoom(i);
+        for (int i = 0; i < Database.instance.getRoomsSize(); i++){
+            Room room = Database.instance.getRoom(i);
 
             HBox box =  new HBox();
 
-            Button button = new Button("Room " + i + " | Opens at " + room.getOpeningTime() + " | closes at " + room.getClosingTime() + " | events: " + room.getEventsSize());
+            box.setSpacing(10);
+
+            Button button = new Button(room.getRoomName() + " | Opens at " + room.getOpeningTime() + " | Closes at " + room.getClosingTime() + " | Number of Events: " + room.getEventsSize());
             box.getChildren().add(button);
-            roomsButtons.add(button);
+            roomButtons.add(button);
 
-            Button removeButton = new Button("Remove");
-            box.getChildren().add(removeButton);
-            roomsButtons.add(removeButton);
+            if (showRemoveButton) {
+                Button removeButton = new Button("Remove");
+                box.getChildren().add(removeButton);
+                roomButtons.add(removeButton);
 
-            removeButton.setOnAction(e -> {
-                if (room.getEventsSize() == 0){
-                    Database.removeRoom(room);
-                    showRoomsButton.fire();
-                }
-                else{
-                    Helper.ShowAlert("Cannot remove Room as it has active events", Alert.AlertType.ERROR);
-                }
-            });
+                removeButton.setOnAction(e -> {
+                    if (room.getEventsSize() == 0) {
+                        Database.instance.removeRoom(room);
+                        buttonToFire.fire();
+                    } else {
+                        ScreensHelper.ShowAlert("Cannot remove Room as it has active events", Alert.AlertType.ERROR);
+                    }
+                });
+            }
 
             roomsList.getChildren().add(box);
         }
@@ -252,19 +257,19 @@ public class AdminScreen {
         return roomsBox;
     }
 
-    private static VBox CreateEventsList(){
+    static VBox CreateEventsList(ArrayList<Button> eventButtons){
         FlowPane eventsList = new FlowPane();
         eventsList.setVgap(10);
         eventsList.setHgap(10);
         eventsList.setOrientation(Orientation.VERTICAL);
 
-        for (int i = 0; i < Database.getEventsSize(); i++){
-            Event event = Database.getEvent(i);
+        for (int i = 0; i < Database.instance.getEventsSize(); i++){
+            Event event = Database.instance.getEvent(i);
 
             Button button = new Button(event.getName() + " | on " + event.getDate() + " | starts at " + event.getStartTime() + " | ends at " + event.getEndTime() + " | Category: " + event.getCategory() + " | " + event.getNumberOfAttendees() + " attending");
             eventsList.getChildren().add(button);
 
-            eventsButtons.add(button);
+            eventButtons.add(button);
         }
 
         VBox eventsBox = new VBox();
@@ -276,34 +281,36 @@ public class AdminScreen {
         return eventsBox;
     }
 
-    private static VBox CreateCategoriesList(){
+    static VBox CreateCategoriesList(boolean showRemoveButton, ArrayList<Button> categoryButtons, Button buttonToFire){
         FlowPane categoriesList = new FlowPane();
         categoriesList.setVgap(10);
         categoriesList.setHgap(10);
         categoriesList.setOrientation(Orientation.VERTICAL);
 
-        for (int i = 0; i < Database.getCategoriesSize(); i++){
-            Category category = Database.getCategory(i);
+        for (int i = 0; i < Database.instance.getCategoriesSize(); i++){
+            Category category = Database.instance.getCategory(i);
 
             HBox box =  new HBox();
 
-            Button button = new Button(category + " | " + "events: " + category.getEventsSize());
+            Button button = new Button(category + " | " + "Events: " + category.getEventsSize());
             box.getChildren().add(button);
-            categoriesButtons.add(button);
+            categoryButtons.add(button);
 
-            Button removeButton = new Button("Remove");
-            box.getChildren().add(removeButton);
-            categoriesButtons.add(removeButton);
+            if (showRemoveButton) {
+                Button removeButton = new Button("Remove");
+                box.getChildren().add(removeButton);
+                categoryButtons.add(removeButton);
 
-            removeButton.setOnAction(e -> {
-                if (category.getEventsSize() == 0){
-                    Database.removeCategory(category);
-                    showCategoriesButton.fire();
-                }
-                else{
-                    Helper.ShowAlert("Cannot remove Category as there are events in this category", Alert.AlertType.ERROR);
-                }
-            });
+                removeButton.setOnAction(e -> {
+                    if (category.getEventsSize() == 0){
+                        Database.instance.removeCategory(category);
+                        buttonToFire.fire();
+                    }
+                    else{
+                        ScreensHelper.ShowAlert("Cannot remove Category as there are events in this category", Alert.AlertType.ERROR);
+                    }
+                });
+            }
 
             categoriesList.getChildren().add(box);
         }
@@ -324,13 +331,15 @@ public class AdminScreen {
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 0, 0, 40));
         grid.add(newRoomLabel, 0, 0);
-        grid.add(openingTimeLabel, 0, 1);
-        grid.add(openingHourSpinner, 1, 1);
-        grid.add(openingMinuteSpinner, 2, 1);
-        grid.add(closingTimeLabel, 0, 2);
-        grid.add(closingHourSpinner, 1, 2);
-        grid.add(closingMinuteSpinner, 2, 2);
-        grid.add(createRoomButton, 0, 3);
+        grid.add(roomNameLabel, 0, 1);
+        grid.add(roomNameField, 1, 1);
+        grid.add(openingTimeLabel, 0, 2);
+        grid.add(openingHourSpinner, 1, 2);
+        grid.add(openingMinuteSpinner, 2, 2);
+        grid.add(closingTimeLabel, 0, 3);
+        grid.add(closingHourSpinner, 1, 3);
+        grid.add(closingMinuteSpinner, 2, 3);
+        grid.add(createRoomButton, 0, 4);
 
         return grid;
     }

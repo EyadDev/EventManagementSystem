@@ -5,7 +5,7 @@ import javafx.geometry.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 
-class Helper {
+public class ScreensHelper {
     static <T extends Node> Pane CenterNode(T node) {
         // Create a VBox to center the StackPane vertically
         VBox vBox = new VBox();
@@ -19,9 +19,10 @@ class Helper {
         return hBox;
     }
 
-    static void ShowAlert(String error, Alert.AlertType type) {
+    public static void ShowAlert(String error, Alert.AlertType type) {
         Alert alert = new Alert(type);
-        alert.setTitle("Error");
+        var title = type.toString().toUpperCase().charAt(0) + type.toString().toLowerCase().substring(1);
+        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(error);
         alert.showAndWait();

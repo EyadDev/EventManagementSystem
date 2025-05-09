@@ -9,35 +9,33 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
-import java.util.Date;
-
 public class LoginRegisterScreen {
-    private static GridPane gridPane = new GridPane();
+    private static final GridPane gridPane = new GridPane();
     private static Label loginLabel = new Label();
-    private static Label usernameLabel = new Label("Username");
-    private static TextField usernameField = new TextField();
+    private static final Label usernameLabel = new Label("Username");
+    private static final TextField usernameField = new TextField();
 
-    private static Label passwordLabel = new Label("Password");
-    private static TextField passwordField = new TextField();
+    private static final Label passwordLabel = new Label("Password");
+    private static final TextField passwordField = new TextField();
 
-    private static Label dateLabel = new Label("Birthday");
-    private static DatePicker datePicker = new DatePicker();
+    private static final Label dateLabel = new Label("Birthday");
+    private static final DatePicker datePicker = new DatePicker();
 
-    private static Label addressLabel = new Label("Address");
-    private static TextField addressField = new TextField();
+    private static final Label addressLabel = new Label("Address");
+    private static final TextField addressField = new TextField();
 
-    private static Label accountTypeLabel = new Label("Account type");
-    private static ToggleGroup accountToggleGroup = new ToggleGroup();
-    private static RadioButton attendeeButton = new RadioButton("Attendee");
-    private static RadioButton organizerButton = new RadioButton("Organizer");
+    private static final Label accountTypeLabel = new Label("Account type");
+    private static final ToggleGroup accountToggleGroup = new ToggleGroup();
+    private static final RadioButton attendeeButton = new RadioButton("Attendee");
+    private static final RadioButton organizerButton = new RadioButton("Organizer");
 
-    private static Label genderLabel = new Label("Gender");
-    private static ToggleGroup genderToggleGroup = new ToggleGroup();
-    private static RadioButton maleButton = new RadioButton("Male");
-    private static RadioButton femaleButton = new RadioButton("Female");
+    private static final Label genderLabel = new Label("Gender");
+    private static final ToggleGroup genderToggleGroup = new ToggleGroup();
+    private static final RadioButton maleButton = new RadioButton("Male");
+    private static final RadioButton femaleButton = new RadioButton("Female");
 
-    private static Label interestsLabel  = new Label("Interests");
-    private static TextField interestsField = new TextField();
+    private static final Label interestsLabel  = new Label("Interests");
+    private static final TextField interestsField = new TextField();
 
     private static Button button1 = new Button();
     private static Button button2 = new Button();
@@ -108,28 +106,28 @@ public class LoginRegisterScreen {
 
         button1.setOnAction((ActionEvent e) -> {
             if (login) {
-                var userIndex = Database.getIndexOfUser(usernameField.getText());
+                var userIndex = Database.instance.getIndexOfUser(usernameField.getText());
                 if (userIndex == -1) {
-                    Helper.ShowAlert("Username doesn't exist", Alert.AlertType.ERROR);
+                    ScreensHelper.ShowAlert("Username doesn't exist", Alert.AlertType.ERROR);
                     return;
                 }
 
-                if (Database.getPerson(userIndex).checkPassword(passwordField.getText())) {
-                    switch (Database.getPerson(userIndex).getUserType()){
+                if (Database.instance.getPerson(userIndex).checkPassword(passwordField.getText())) {
+                    switch (Database.instance.getPerson(userIndex).getUserType()){
                         case UserType.Admin -> Main.primaryStage.setScene(AdminScreen.AdminScreen());
-                        case UserType.Organizer -> Helper.ShowAlert("You are already an organizer", Alert.AlertType.ERROR);
-                        case UserType.Attendee -> Main.primaryStage.setScene(AttendeeScreen.attendeeScreen((Attendee)Database.getPerson(userIndex)));
+                        case UserType.Organizer -> Main.primaryStage.setScene(OrgaizerScreen.OrganizerScreen((Organizer) Database.instance.getPerson(userIndex)));
+                        case UserType.Attendee -> Main.primaryStage.setScene(AttendeeScreen.AttendeeScreen((Attendee)Database.instance.getPerson(userIndex)));
                     }
                 }
 
                 else {
-                    Helper.ShowAlert("Incorrect password", Alert.AlertType.ERROR);
+                    ScreensHelper.ShowAlert("Incorrect password", Alert.AlertType.ERROR);
                 }
             }
 
             else{
-                if (Database.getIndexOfUser(usernameField.getText()) != -1) {
-                    Helper.ShowAlert("User already exists", Alert.AlertType.ERROR);
+                if (Database.instance.getIndexOfUser(usernameField.getText()) != -1) {
+                    ScreensHelper.ShowAlert("User already exists", Alert.AlertType.ERROR);
                     return;
                 }
 
@@ -141,11 +139,11 @@ public class LoginRegisterScreen {
                     }
 
                     new Attendee(usernameField.getText(), passwordField.getText(), datePicker.getValue(), addressField.getText(), gender, interestsField.getText());
-                    Helper.ShowAlert("Created new attendee with username: " + usernameField.getText(), Alert.AlertType.CONFIRMATION);
+                    ScreensHelper.ShowAlert("Created new attendee with username: " + usernameField.getText(), Alert.AlertType.CONFIRMATION);
                 }
                 else{
                     new Organizer(usernameField.getText(), passwordField.getText());
-                    Helper.ShowAlert("Created new organizer with username: " + usernameField.getText(), Alert.AlertType.CONFIRMATION);
+                    ScreensHelper.ShowAlert("Created new organizer with username: " + usernameField.getText(), Alert.AlertType.CONFIRMATION);
                 }
 
                 usernameField.clear();
@@ -208,7 +206,7 @@ public class LoginRegisterScreen {
         UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
 
         // Create a Scene and set it on the Stage
-        return new Scene(Helper.CenterNode(gridPane), Main.primaryStage.widthProperty().doubleValue(), Main.primaryStage.heightProperty().doubleValue());
+        return new Scene(ScreensHelper.CenterNode(gridPane), Main.primaryStage.widthProperty().doubleValue(), Main.primaryStage.heightProperty().doubleValue());
     }
 
     private static void UpdateSizes(double newVal){

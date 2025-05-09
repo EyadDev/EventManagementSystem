@@ -18,12 +18,12 @@ public abstract class User implements Comparable<User> {
         this.userType = userType;
 
         wallet = new Wallet(this);
-        Database.addUser(this);
+        Database.instance.addUser(this);
     }
 
     public static boolean isValidUser(String username){
-        for (int i = 0; i < Database.getPeopleSize(); i++){
-            if (Database.getPerson(i).getUsername().equals(username)){
+        for (int i = 0; i < Database.instance.getPeopleSize(); i++){
+            if (Database.instance.getPerson(i).getUsername().equals(username)){
                 System.out.println("Account already exists with the same username");
                 return false;
             }

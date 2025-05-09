@@ -8,25 +8,24 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class AttendeeScreen {
-    private static Label attendeeLabel = new Label("Attendee interface");
+    private static final Label attendeeLabel = new Label("Attendee interface");
 
-    private static Label walletBalance = new Label("Balance: ");
-    private static Button showEventsButton = new Button("Events");
-    private static Button showProfileButton = new Button("Profile");
-    private static Button logoutButton = new Button("Logout");
+    private static final Label walletBalance = new Label("Balance: ");
+    private static final Button showEventsButton = new Button("Events");
+    private static final Button showProfileButton = new Button("Profile");
+    private static final Button logoutButton = new Button("Logout");
 
-    private static Label availableEventsLabel = new Label("Available Events");
-    private static Label attendedEventsLabel = new Label("Attended Events");
-    private static ArrayList<Button> eventsButtons = new ArrayList<>();
+    private static final Label availableEventsLabel = new Label("Available Events");
+    private static final Label attendedEventsLabel = new Label("Attended Events");
+    private static final ArrayList<Button> eventsButtons = new ArrayList<>();
 
-    private static Label profileLabel = new Label("Profile");
-    private static Button profileButton = new Button();
+    private static final Label profileLabel = new Label("Profile");
+    private static final Button profileButton = new Button();
 
-    public static Scene attendeeScreen(Attendee attendee) {
+    public static Scene AttendeeScreen(Attendee attendee) {
 
         VBox buttonStack = new VBox();
         buttonStack.setSpacing(10);
@@ -38,7 +37,7 @@ public class AttendeeScreen {
 
         // Create a GridPane
         var borderPane = new BorderPane();
-        borderPane.setTop(Helper.CenterNode(attendeeLabel));
+        borderPane.setTop(ScreensHelper.CenterNode(attendeeLabel));
         borderPane.setLeft(buttonStack);
 
         showEventsButton.setOnAction(e -> {
@@ -93,8 +92,8 @@ public class AttendeeScreen {
         attendedEventsList.setHgap(10);
         attendedEventsList.setOrientation(Orientation.VERTICAL);
 
-        for (int i = 0; i < Database.getEventsSize(); i++){
-            Event event = Database.getEvent(i);
+        for (int i = 0; i < Database.instance.getEventsSize(); i++){
+            Event event = Database.instance.getEvent(i);
             boolean alreadyAttends = false;
 
             for(int j = 0; j < event.getNumberOfAttendees(); j++){
@@ -108,23 +107,25 @@ public class AttendeeScreen {
 
                 HBox box =  new HBox();
 
+                box.setSpacing(10);
+
                 Button button = new Button(event.getName() + " | on " + event.getDate() + " | starts at " + event.getStartTime() + " | ends at " + event.getEndTime() + " | Category: " + event.getCategory());
                 box.getChildren().add(button);
                 eventsButtons.add(button);
 
-                Button buyButton = new Button("Buy: " + event.getPrice() + "$");
+                Button buyButton = new Button("Buy: $" + event.getPrice());
                 box.getChildren().add(buyButton);
                 eventsButtons.add(buyButton);
 
                 buyButton.setOnAction(e -> {
                     if (attendee.getWallet().getBalance() >= event.getPrice()){
                         attendee.getWallet().updateBalance(-event.getPrice());
-                        walletBalance.setText("Balance: " + attendee.getWallet().getBalance() + "$");
+                        walletBalance.setText("Balance: $" + attendee.getWallet().getBalance());
                         event.addAttendee(attendee);
                         showEventsButton.fire();
                     }
                     else{
-                        Helper.ShowAlert("Insufficient balance for payment of ticket", Alert.AlertType.ERROR);
+                        ScreensHelper.ShowAlert("Insufficient balance for payment of ticket", Alert.AlertType.ERROR);
                     }
                 });
 

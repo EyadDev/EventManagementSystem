@@ -9,5 +9,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="bcprov-jdk18on-1.80" level="project" />
     <orderEntry type="library" exported="" name="javafx" level="project" />
+    <orderEntry type="library" name="jackson-core-2.19.0" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.19.0" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.19.0" level="project" />
   </component>
 </module>

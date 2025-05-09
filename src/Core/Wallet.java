@@ -10,7 +10,7 @@ public class Wallet {
         this.balance = balance;
         this.owner = owner;
 
-        Database.addWallet(this);
+        Database.instance.addWallet(this);
     }
 
     Wallet(User owner){

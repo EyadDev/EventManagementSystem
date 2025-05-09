@@ -1,35 +1,57 @@
 package Core;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Database {
-    private static ArrayList<Wallet> wallets = new ArrayList<>();
-    private static ArrayList<User> users = new ArrayList<>();
-    private static ArrayList<Event> events = new ArrayList<>();
-    private static ArrayList<Category> categories = new ArrayList<>();
-    private static ArrayList<Room> rooms = new ArrayList<>();
+    public static Database instance = new Database();
+    private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<Wallet> wallets = new ArrayList<>();
+    private ArrayList<Event> events = new ArrayList<>();
+    private ArrayList<Category> categories = new ArrayList<>();
+    private ArrayList<Room> rooms = new ArrayList<>();
 
-    public static void addWallet(Wallet wallet) { wallets.add(wallet); }
+    public Database() {
+        // TODO: Load from file
+    }
 
-    public static void removeWallet(Wallet wallet) { wallets.remove(wallet); }
+    private void SaveDataToFile() {
+        // TODO
+    }
 
-    public static Wallet getWallet(int index) { return wallets.get(index); }
+    public void addWallet(Wallet wallet) {
+        wallets.add(wallet);
+        SaveDataToFile();
+    }
 
-    public static int getWalletsSize() { return wallets.size(); }
+    public void removeWallet(Wallet wallet) {
+        wallets.remove(wallet);
+        SaveDataToFile();
+    }
 
-    public static void addUser(User user) {
+    public Wallet getWallet(int index) { return wallets.get(index); }
+
+    public int getWalletsSize() { return wallets.size(); }
+
+    public void addUser(User user) {
         users.add(user);
         sortLists();
+        SaveDataToFile();
     }
 
-    public static void removeUser(User user) {
+    public void removeUser(User user) {
         users.remove(user);
         sortLists();
+        SaveDataToFile();
     }
 
-    public static User getPerson(int index) { return users.get(index); }
+    public User getPerson(int index) { return users.get(index); }
 
-    public static int getIndexOfUser(String username) {
+    public int getIndexOfUser(String username) {
         for (var i = 0; i < users.size(); i++) {
             if (users.get(i).getUsername().equalsIgnoreCase(username)) {
                 return i;
@@ -39,65 +61,91 @@ public class Database {
         return -1;
     }
 
-    public static int getPeopleSize(){
+    public int getPeopleSize(){
         return users.size();
     }
 
-    public static void addEvent(Event event){
+    public void addEvent(Event event){
         events.add(event);
         sortLists();
+        SaveDataToFile();
     }
 
-    public static void removeEvent(Event event){
+    public void removeEvent(Event event){
         events.remove(event);
         sortLists();
+        SaveDataToFile();
     }
 
-    public static Event getEvent(int index){
+    public Event getEvent(int index){
         return events.get(index);
     }
 
-    public static int getEventsSize(){
+    public int getEventsSize(){
         return events.size();
     }
 
-    public static void addCategory(Category category){
+    public void addCategory(Category category){
         categories.add(category);
+        SaveDataToFile();
     }
 
-    public static void removeCategory(Category category){
+    public void removeCategory(Category category){
         categories.remove(category);
+        SaveDataToFile();
     }
 
-    public static Category getCategory(int index){
+    public Category getCategory(int index){
         return categories.get(index);
     }
 
-    public static int getCategoriesSize(){
+    public int getCategoriesSize(){
         return categories.size();
     }
 
-    public static void addRoom(Room room){
+    public String[] getCategoryNames(){
+        var names = new String[categories.size()];
+
+        for(int i = 0; i < categories.size(); i++){
+            names[i] = categories.get(i).getName();
+        }
+
+        return names;
+    }
+
+    public void addRoom(Room room){
         rooms.add(room);
         sortLists();
+        SaveDataToFile();
     }
 
-    public static void removeRoom(Room room){
+    public void removeRoom(Room room){
         rooms.remove(room);
         sortLists();
+        SaveDataToFile();
     }
 
-    public static Room getRoom(int index){
+    public Room getRoom(int index){
         return rooms.get(index);
     }
 
-    public static int getRoomsSize(){
+    public String[] getRoomNames(){
+        var names = new String[rooms.size()];
+
+        for(int i = 0; i < rooms.size(); i++){
+            names[i] = rooms.get(i).getRoomName();
+        }
+
+        return names;
+    }
+
+    public int getRoomsSize(){
         return rooms.size();
     }
 
-    private static void sortLists(){
-        users.sort( (a,b) -> {return a.compareTo(b); });
-        rooms.sort( (a,b) -> {return b.compareTo(a); });
-        events.sort( (a,b) -> {return a.compareTo(b); });
+    private void sortLists(){
+        users.sort(Comparator.naturalOrder());
+        rooms.sort(Comparator.reverseOrder());
+        events.sort(Comparator.naturalOrder());
     }
 }

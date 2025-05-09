@@ -1,0 +1,9 @@
+{
+  "categoryNames" : [ "Party" ],
+  "categoriesSize" : 1,
+  "peopleSize" : 4,
+  "walletsSize" : 4,
+  "eventsSize" : 3,
+  "roomNames" : [ "911A", "924A", "505B", "Hall 1" ],
+  "roomsSize" : 4
+}

@@ -1,22 +1,27 @@
 package Core;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import Screens.ScreensHelper;
+import javafx.scene.control.Alert;
+
 import java.time.LocalTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Room implements Comparable<Room>{
+    private String roomName;
     private ArrayList<Event> events = new ArrayList<>();
     private LocalTime openingTime;
     private LocalTime closingTime;
 
-    public Room(LocalTime openingTime, LocalTime closingTime) {
+    public Room(String roomName, LocalTime openingTime, LocalTime closingTime) {
+        this.roomName = roomName;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
 
-        Database.addRoom(this);
+        Database.instance.addRoom(this);
+    }
+
+    public String getRoomName() {
+        return roomName;
     }
 
     public LocalTime getOpeningTime() {
@@ -54,13 +59,8 @@ public class Room implements Comparable<Room>{
 
     public boolean checkForConflicts(Event eventToAdd) {
         if (eventToAdd.getStartTime().isBefore(openingTime) || eventToAdd.getEndTime().isAfter(closingTime)){
-            System.out.println("Event has conflict with room times!");
+            ScreensHelper.ShowAlert("Event has conflict with room times.", Alert.AlertType.ERROR);
             return true;
-        }
-
-        if (events.isEmpty()){
-            System.out.println("Event has no conflicts!");
-            return false;
         }
 
         for (Event addedEvent : events) {
@@ -69,12 +69,11 @@ public class Room implements Comparable<Room>{
             boolean eventBeforeOther = eventToAdd.getStartTime().isBefore(addedEvent.getStartTime()) && eventToAdd.getEndTime().isBefore(addedEvent.getStartTime());
 
             if (sameDate && !eventAfterOther && !eventBeforeOther) {
-                System.out.println("Event is in conflict with another event");
+                ScreensHelper.ShowAlert("Event is in conflict with another event.", Alert.AlertType.ERROR);
                 return true;
             }
         }
 
-        System.out.println("Event has no conflicts!");
         return false;
     }
 }
