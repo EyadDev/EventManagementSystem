@@ -26,12 +26,14 @@ public class Event implements Comparable<Event> {
 
         this.attendees = new ArrayList<>();
         this.organizer = organizer;
+        organizer.addEvent(this);
         this.price = price;
 
         Database.instance.addEvent(this);
     }
 
     public void DeleteEvent() {
+        organizer.removeEvent(this);
         category.removeEvent(this);
         Database.instance.removeEvent(this);
     }

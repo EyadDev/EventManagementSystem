@@ -145,7 +145,7 @@ public class AdminScreen {
         return new Scene((borderPane), Main.primaryStage.widthProperty().doubleValue(), Main.primaryStage.heightProperty().doubleValue());
     }
 
-    public static void UpdateSizes(double newVal){
+    static void UpdateSizes(double newVal){
         double fontSize = Math.max(12, newVal / 50);
         adminLabel.setFont(new Font(fontSize));
         addRoomButton.setStyle("-fx-font-size: " + fontSize + "px;");

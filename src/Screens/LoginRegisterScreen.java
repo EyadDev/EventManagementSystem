@@ -115,7 +115,7 @@ public class LoginRegisterScreen {
                 if (Database.instance.getPerson(userIndex).checkPassword(passwordField.getText())) {
                     switch (Database.instance.getPerson(userIndex).getUserType()){
                         case UserType.Admin -> Main.primaryStage.setScene(AdminScreen.AdminScreen());
-                        case UserType.Organizer -> Main.primaryStage.setScene(OrgaizerScreen.OrganizerScreen((Organizer) Database.instance.getPerson(userIndex)));
+                        case UserType.Organizer -> Main.primaryStage.setScene(OrganizerScreen.OrganizerScreen((Organizer) Database.instance.getPerson(userIndex)));
                         case UserType.Attendee -> Main.primaryStage.setScene(AttendeeScreen.AttendeeScreen((Attendee)Database.instance.getPerson(userIndex)));
                     }
                 }

@@ -16,21 +16,15 @@ public class Database {
     private ArrayList<Room> rooms = new ArrayList<>();
 
     public Database() {
-        // TODO: Load from file
-    }
 
-    private void SaveDataToFile() {
-        // TODO
     }
 
     public void addWallet(Wallet wallet) {
         wallets.add(wallet);
-        SaveDataToFile();
     }
 
     public void removeWallet(Wallet wallet) {
         wallets.remove(wallet);
-        SaveDataToFile();
     }
 
     public Wallet getWallet(int index) { return wallets.get(index); }
@@ -40,13 +34,11 @@ public class Database {
     public void addUser(User user) {
         users.add(user);
         sortLists();
-        SaveDataToFile();
     }
 
     public void removeUser(User user) {
         users.remove(user);
         sortLists();
-        SaveDataToFile();
     }
 
     public User getPerson(int index) { return users.get(index); }
@@ -68,13 +60,11 @@ public class Database {
     public void addEvent(Event event){
         events.add(event);
         sortLists();
-        SaveDataToFile();
     }
 
     public void removeEvent(Event event){
         events.remove(event);
         sortLists();
-        SaveDataToFile();
     }
 
     public Event getEvent(int index){
@@ -87,12 +77,10 @@ public class Database {
 
     public void addCategory(Category category){
         categories.add(category);
-        SaveDataToFile();
     }
 
     public void removeCategory(Category category){
         categories.remove(category);
-        SaveDataToFile();
     }
 
     public Category getCategory(int index){
@@ -116,13 +104,11 @@ public class Database {
     public void addRoom(Room room){
         rooms.add(room);
         sortLists();
-        SaveDataToFile();
     }
 
     public void removeRoom(Room room){
         rooms.remove(room);
         sortLists();
-        SaveDataToFile();
     }
 
     public Room getRoom(int index){

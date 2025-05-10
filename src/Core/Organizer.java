@@ -3,7 +3,7 @@ package Core;
 import java.util.ArrayList;
 
 public class Organizer extends User {
-    private ArrayList<Event> organizedEvents;
+    private ArrayList<Event> organizedEvents = new ArrayList<>();
 
     public Organizer(String username, String password){
         super(username, password, UserType.Organizer);
@@ -17,7 +17,11 @@ public class Organizer extends User {
         organizedEvents.remove(event);
     }
 
-    public void getEvent(int index){
-        organizedEvents.get(index);
+    public Event getEvent(int index){
+        return organizedEvents.get(index);
+    }
+
+    public int getEventsSize(){
+        return organizedEvents.size();
     }
 }

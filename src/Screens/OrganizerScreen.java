@@ -8,11 +8,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class OrgaizerScreen {
+public class OrganizerScreen {
     private static final Label organizerLabel = new Label("Organizer interface");
 
     private static final Label walletBalance = new Label("Balance: ");
@@ -87,7 +88,7 @@ public class OrgaizerScreen {
 
         showAttendeesButton.setOnAction(e -> {
             borderPane.setCenter(sp1);
-            sp1.setContent(CreateAttendeesList());
+            sp1.setContent(CreateAttendeesList(organizer));
             UpdateSizes(Main.primaryStage.widthProperty().doubleValue());
         });
 
@@ -246,20 +247,38 @@ public class OrgaizerScreen {
     }
 
     //create a list of attendees that includes their username and wallet balance
-    private static VBox CreateAttendeesList(){
+    private static VBox CreateAttendeesList(Organizer organizer){
         FlowPane attendeesList = new FlowPane();
         attendeesList.setVgap(10);
         attendeesList.setHgap(10);
         attendeesList.setOrientation(Orientation.VERTICAL);
 
-        for (int i = 0; i < Database.instance.getPeopleSize(); i++){
-            User user = Database.instance.getPerson(i);
+        ArrayList<Attendee> attendees = new ArrayList<>();
 
-            if(user instanceof Attendee){
-                Button button = new Button("Username: " + user.getUsername() + " | Balance: " + user.getWallet().getBalance() + "$");
-                attendeesList.getChildren().add(button);
+        for (int i = 0; i < organizer.getEventsSize(); i++){
+            for (int j = 0; j < organizer.getEvent(i).getNumberOfAttendees(); j++){
+                User user = organizer.getEvent(i).getAttendee(j);
 
-                attendeeButtons.add(button);
+                if(user instanceof Attendee){
+                    boolean isDuplicate = false;
+
+                    for (int k = 0; k < attendees.size(); k++){
+                        if (user == attendees.get(k)){
+                            isDuplicate = true;
+                            break;
+                        }
+                    }
+
+                    if (isDuplicate){
+                        continue;
+                    }
+
+                    Button button = new Button("Username: " + user.getUsername() + " | Balance: " + user.getWallet().getBalance() + "$");
+                    attendeesList.getChildren().add(button);
+
+                    attendees.add((Attendee) user);
+                    attendeeButtons.add(button);
+                }
             }
         }
 
